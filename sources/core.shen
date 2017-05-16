@@ -83,12 +83,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <pattern> <patterns> := [<pattern> | <patterns>];
   <e> := [];)
 
+(defcc <even-patterns>
+  <pattern1> <pattern2> <even-patterns> := [<pattern1> <pattern2> | <even-patterns>];
+  <e> := [];)
+
 (defcc <pattern>
   [@p <pattern1> <pattern2>] := [@p <pattern1> <pattern2>];
   [cons <pattern1> <pattern2>] := [cons <pattern1> <pattern2>];
   [@v <pattern1> <pattern2>] := [@v <pattern1> <pattern2>];
   [@s <pattern1> <pattern2>] := [@s <pattern1> <pattern2>];
-  [@d <pattern1> <pattern2>] := [@d <pattern1> <pattern2>];
+  [@d <even-patterns>] := [@d <even-patterns>];
   [vector 0] := [vector 0];
   X := (constructor-error X) 	where (cons? X);
   <simple_pattern> := <simple_pattern>;)
@@ -329,7 +333,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   -> (do (add_test [+dict? A])
          (let Abstraction [/. K [/. V (ebr A [@d K V] Z)]]
               Application [[Abstraction [<-dict A K]] A]
-           (reduce_help )))
+           (reduce_help Application)))
   [[/. X Z] A]
   -> (do (add_test [= X A])
          (reduce_help Z))  where (not (variable? X))

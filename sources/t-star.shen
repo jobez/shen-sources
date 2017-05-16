@@ -88,7 +88,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   (mode [@p X Y] -) [A * B] Hyp <-- (th* X A Hyp) (th* Y B Hyp);
   (mode [@v X Y] -) [vector A] Hyp <-- (th* X A Hyp) (th* Y [vector A] Hyp);
   (mode [@s X Y] -) string Hyp <-- (th* X string Hyp) (th* Y string Hyp);
-  (mode [@d X Y] -) [dict K V] Hyp <-- (th* X V Hyp) (th* Y K Hyp);
+  (mode [@d K0 V0] -) [dict K V] Hyp <--
+    (th* K0 K Hyp) (th* V0 V Hyp);
+  (mode [@d K0 V0 K1 V1] -) [dict K V] Hyp <--
+    (th* K0 K Hyp) (th* V0 V Hyp)
+    (th* K1 K Hyp) (th* V1 V Hyp);
+  (mode [@d K0 V0 K1 V1 K2 V2] -) [dict K V] Hyp <--
+    (th* K0 K Hyp) (th* V0 V Hyp)
+    (th* K1 K Hyp) (th* V1 V Hyp)
+    (th* K2 K Hyp) (th* V2 V Hyp);
+  (mode [@d K0 V0 K1 V1 K2 V2 K3 V3] -) [dict K V] Hyp <--
+    (th* K0 K Hyp) (th* V0 V Hyp)
+    (th* K1 K Hyp) (th* V1 V Hyp)
+    (th* K2 K Hyp) (th* V2 V Hyp)
+    (th* K3 K Hyp) (th* V3 V Hyp);
   (mode [lambda X Y] -) [A --> B] Hyp <-- ! (bind X&& (placeholder))
                                             (bind Z (ebr X&& X Y))
                                             (th* Z B [[X&& : A] | Hyp]);
@@ -123,8 +136,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <-- (bind Out [[X : A] [Y : [vector A]] | Hyp]);
   (mode [[[@s X Y] : (mode string +)] | Hyp] -) Out
     <-- (bind Out [[X : string] [Y : string] | Hyp]);
-  (mode [[[@d X Y] : (mode [dict K V] +)] | Hyp] -) Out
-    <-- (bind Out [[X : K] [Y : V] | Hyp]);
+  (mode [[[@d K0 V0] : (mode [dict K V] +)] | Hyp] -) Out
+    <-- (bind Out [[K0 : K] [V0 : V] | Hyp]);
+  (mode [[[@d K0 V0 K1 V1] : (mode [dict K V] +)] | Hyp] -) Out
+    <-- (bind Out [[K0 : K] [V0 : V] [K1 : K] [V1 : V] | Hyp]);
+  (mode [[[@d K0 V0 K1 V1 K2 V2] : (mode [dict K V] +)] | Hyp] -) Out
+    <-- (bind Out [[K0 : K] [V0 : V] [K1 : K] [V1 : V] [K2 : K] [V2 : V] | Hyp]);
+  (mode [[[@d K0 V0 K1 V1 K2 V2 K3 V3] : (mode [dict K V] +)] | Hyp] -) Out
+    <-- (bind Out [[K0 : K] [V0 : V] [K1 : K] [V1 : V] [K2 : K] [V2 : V] [K3 : K] [V3 : V] | Hyp]);
   (mode [X | Hyp] -) Out
     <-- (bind Out [X | NewHyps]) (t*-hyps Hyp NewHyps);)
 
