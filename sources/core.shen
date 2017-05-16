@@ -88,6 +88,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   [cons <pattern1> <pattern2>] := [cons <pattern1> <pattern2>];
   [@v <pattern1> <pattern2>] := [@v <pattern1> <pattern2>];
   [@s <pattern1> <pattern2>] := [@s <pattern1> <pattern2>];
+  [@d <pattern1> <pattern2>] := [@d <pattern1> <pattern2>];
   [vector 0] := [vector 0];
   X := (constructor-error X) 	where (cons? X);
   <simple_pattern> := <simple_pattern>;)
@@ -324,6 +325,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
          (let Abstraction [/. X [/. Y (ebr A [@s X Y] Z)]]
               Application [[Abstraction [pos A 0]] [tlstr A]]
            (reduce_help Application)))
+  [[/. [@d K V] Z] A] \\ TODO: handle additional arities in destructuring
+  -> (do (add_test [+dict? A])
+         (let Abstraction [/. K [/. V (ebr A [@d K V] Z)]]
+              Application [[Abstraction [<-dict A K]] A]
+           (reduce_help )))
   [[/. X Z] A]
   -> (do (add_test [= X A])
          (reduce_help Z))  where (not (variable? X))
@@ -339,6 +345,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 (define +vector?
   X -> (and (absvector? X) (> (<-address X 0) 0)))
+
+(define +dict?
+  X -> (and (dict? X) (> (dict-count X) 0)))
 
 (define ebr
   A B B -> A

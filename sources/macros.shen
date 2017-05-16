@@ -115,6 +115,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       where (string? X)
   X -> X)
 
+(define @d-macro
+  [@d | KVs] ->
+    (let Dict (gensym (protect D))
+         Assigns (map (/. P [dict-> Dict (fst P) (snd P)]) (pairwise KVs))
+      [let Dict [dict (length Assigns)] [do | (append Assigns [Dict])]])
+  X -> X)
+
 (define synonyms-macro
   [synonyms | X] -> [synonyms-help (rcons_form (curry-synonyms X))]
   X -> X)

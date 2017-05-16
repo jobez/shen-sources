@@ -88,6 +88,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   (mode [@p X Y] -) [A * B] Hyp <-- (th* X A Hyp) (th* Y B Hyp);
   (mode [@v X Y] -) [vector A] Hyp <-- (th* X A Hyp) (th* Y [vector A] Hyp);
   (mode [@s X Y] -) string Hyp <-- (th* X string Hyp) (th* Y string Hyp);
+  (mode [@d X Y] -) [dict K V] Hyp <-- (th* X V Hyp) (th* Y K Hyp);
   (mode [lambda X Y] -) [A --> B] Hyp <-- ! (bind X&& (placeholder))
                                             (bind Z (ebr X&& X Y))
                                             (th* Z B [[X&& : A] | Hyp]);
@@ -122,6 +123,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <-- (bind Out [[X : A] [Y : [vector A]] | Hyp]);
   (mode [[[@s X Y] : (mode string +)] | Hyp] -) Out
     <-- (bind Out [[X : string] [Y : string] | Hyp]);
+  (mode [[[@d X Y] : (mode [dict K V] +)] | Hyp] -) Out
+    <-- (bind Out [[X : K] [Y : V] | Hyp]);
   (mode [X | Hyp] -) Out
     <-- (bind Out [X | NewHyps]) (t*-hyps Hyp NewHyps);)
 

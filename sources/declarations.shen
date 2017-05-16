@@ -41,7 +41,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                  compile-macro datatype-macro let-macro assoc-macro
                  make-string-macro output-macro input-macro error-macro
                  prolog-macro synonyms-macro nl-macro
-                 @s-macro defprolog-macro function-macro])
+                 @s-macro @d-macro defprolog-macro function-macro])
 (set *macros*
      [(/. X (timer-macro X))
       (/. X (cases-macro X))
@@ -59,12 +59,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       (/. X (synonyms-macro X))
       (/. X (nl-macro X))
       (/. X (@s-macro X))
+      (/. X (@d-macro X))
       (/. X (defprolog-macro X))
       (/. X (function-macro X))])
 (set *gensym* 0)
 (set *tracking* [])
 (set *alphabet* [A B C D E F G H I J K L M N O P Q R S T U V W X Y Z])
-(set *special* [@p @s @v cons lambda let where set open])
+(set *special* [@p @s @v @d cons lambda let where set open])
 (set *extraspecial* [define process-datatype input+ defcc read+ defmacro])
 (set *spy* false)
 (set *datatypes* [])
@@ -135,7 +136,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   union 2 untrack 1 unspecialise 1 undefmacro 1
   vector 1 vector? 1 vector-> 3 value 1 value/or 2 variable? 1 version 0
   write-byte 2 write-to-file 2 y-or-n? 1 + 2 * 2 / 2 - 2 == 2
-  <e> 1 <!> 1 @p 2 @v 2 @s 2 preclude 1 include 1
+  <e> 1 <!> 1 @p 2 @v 2 @s 2 @d 2 preclude 1 include 1
   preclude-all-but 1 include-all-but 1
   dict 1 dict? 1 dict-count 1 dict-> 3 <-dict/or 3 <-dict 2 dict-rm 2
   dict-fold 3 dict-keys 1 dict-values 1
@@ -156,7 +157,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       *home-directory* *version* *argv*
       *maximum-print-sequence-size* *macros* *os* *release* *property-vector*
       *port* *porters* *hush*
-      @v @p @s
+      @v @p @s @d
       <- -> <e> <!> == = >= > /. =! $ - / * + <= < >> <>
       y-or-n? write-to-file write-byte where when warn version verified
       variable? value value/or vector-> <-vector <-vector/or vector vector?

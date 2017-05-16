@@ -97,6 +97,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 (define @s
   X Y -> (cn X Y))
 
+(define @d
+  K V -> (let D (dict 1) (do (dict-> D K V) D)))
+
+(define pairwise
+  [] -> []
+  [X Y | Z] -> [(@p X Y) | (pairwise Z)])
+
 (define tc?
   -> (value *tc*))
 
