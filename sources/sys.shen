@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 *\
 
-(package shen []
+(package shen [@d]
 
 (define thaw
   F -> (F))

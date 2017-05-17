@@ -83,16 +83,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <pattern> <patterns> := [<pattern> | <patterns>];
   <e> := [];)
 
-(defcc <even-patterns>
-  <pattern1> <pattern2> <even-patterns> := [<pattern1> <pattern2> | <even-patterns>];
-  <e> := [];)
-
 (defcc <pattern>
   [@p <pattern1> <pattern2>] := [@p <pattern1> <pattern2>];
   [cons <pattern1> <pattern2>] := [cons <pattern1> <pattern2>];
   [@v <pattern1> <pattern2>] := [@v <pattern1> <pattern2>];
   [@s <pattern1> <pattern2>] := [@s <pattern1> <pattern2>];
-  [@d <even-patterns>] := [@d <even-patterns>];
+  [@d <pattern1> <pattern2>]
+    := [@d <pattern1> <pattern2>];
+  [@d <pattern1> <pattern2> <pattern3> <pattern4>]
+    := [@d <pattern1> <pattern2> <pattern3> <pattern4>];
+  [@d <pattern1> <pattern2> <pattern3> <pattern4> <pattern5> <pattern6>]
+    := [@d <pattern1> <pattern2> <pattern3> <pattern4> <pattern5> <pattern6>];
+  [@d <pattern1> <pattern2> <pattern3> <pattern4> <pattern5> <pattern6> <pattern7> <pattern8>]
+    := [@d <pattern1> <pattern2> <pattern3> <pattern4> <pattern5> <pattern6> <pattern7> <pattern8>];
   [vector 0] := [vector 0];
   X := (constructor-error X) 	where (cons? X);
   <simple_pattern> := <simple_pattern>;)
@@ -108,6 +111,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <pattern> := <pattern>;)
 
 (defcc <pattern2>
+  <pattern> := <pattern>;)
+
+(defcc <pattern3>
+  <pattern> := <pattern>;)
+
+(defcc <pattern4>
+  <pattern> := <pattern>;)
+
+(defcc <pattern5>
+  <pattern> := <pattern>;)
+
+(defcc <pattern6>
+  <pattern> := <pattern>;)
+
+(defcc <pattern7>
+  <pattern> := <pattern>;)
+
+(defcc <pattern8>
   <pattern> := <pattern>;)
 
 (defcc <action>

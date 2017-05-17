@@ -132,6 +132,12 @@
  (alldigits? "123") true)
 
 (report
+ "dicts"
+
+ (load "dicts.shen") loaded
+ (get-name (@d name "Bob")) "Bob")
+
+(report
  "calculator.shen - chapter 11"
 
  (load "calculator.shen") loaded
