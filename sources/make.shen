@@ -33,6 +33,10 @@
 (systemf *argv*)
 (systemf command-line)
 
+(if (not (bound? *relative-kl-path*))
+    (set *relative-kl-path* "")
+    skip)
+
 (define make
   -> (map (function make-file)
           ["core.shen" "declarations.shen" "load.shen" "macros.shen"
@@ -60,7 +64,7 @@
                    KL (map (function make-kl-code) Shen)
                    StringKL (@s (license) (list->string KL))
                    KLFile (klfile ShenFile)
-                   Write (write-to-file KLFile StringKL)
+                   Write (write-to-file (cn (value *relative-kl-path*) KLFile) StringKL)
                  KLFile))
 
 (define make-kl-code
