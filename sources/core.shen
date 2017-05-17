@@ -350,10 +350,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
          (let Abstraction [/. X [/. Y (ebr A [@s X Y] Z)]]
               Application [[Abstraction [pos A 0]] [tlstr A]]
            (reduce_help Application)))
-  [[/. [@d K V] Z] A] \\ TODO: handle additional arities in destructuring
-  -> (do (add_test [+dict? A])
-         (let Abstraction [/. K [/. V (ebr A [@d K V] Z)]]
-              Application [[Abstraction [<-dict A K]] A]
+  [[/. [@d K0 V0] Z] A]
+  -> (do (add_test [and [+dict? A] [has-key? A K0]])
+         (let Abstraction [/. K0 [/. V0 (ebr A [@d K0 V0] Z)]]
+              Application [[Abstraction [<-dict A K0]] A]
+           (reduce_help Application)))
+  [[/. [@d K0 V0 K1 V1] Z] A]
+  -> (do (add_test [and [+dict? A] [has-key? A K0] [has-key? A K1]])
+         (let Abstraction [/. K0 [/. V0 [/. K1 [/. V1 (ebr A [@d K0 V0 K1 V1] Z)]]]]
+              Application [[Abstraction [<-dict A K0] [<-dict A K1]] A]
            (reduce_help Application)))
   [[/. X Z] A]
   -> (do (add_test [= X A])
@@ -373,6 +378,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 (define +dict?
   X -> (and (dict? X) (> (dict-count X) 0)))
+
+(define has-key?
+  D K -> (element? K (dict-keys D)))
 
 (define ebr
   A B B -> A
