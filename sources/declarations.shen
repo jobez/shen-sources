@@ -152,7 +152,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 (put (intern "shen") external-symbols
      [! } { --> <-- && : ; :- := _
-      *language* *implementation* *stinput* *stoutput* *sterror*
+      *language* *implementation* *stinput* *stoutput* *sterror* *interactive-input*
       *home-directory* *version* *argv*
       *maximum-print-sequence-size* *macros* *os* *release* *property-vector*
       *port* *porters* *hush*
