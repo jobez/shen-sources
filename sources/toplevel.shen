@@ -82,6 +82,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           Parsed (fst NewLineread)
        (toplevel_interactive Parsed)))
 
+(define interactive-evaluate
+  InteractiveInput -> (let Lineread InteractiveInput
+                    History (value *history*)
+                    NewLineread (retrieve-from-history-if-needed Lineread History)
+                  NewHistory (update_history NewLineread History)
+                  Parsed (fst NewLineread)
+                  (toplevel_interactive Parsed)))
+
 (define retrieve-from-history-if-needed
   (@p Line [C | Cs]) H -> (retrieve-from-history-if-needed (@p Line Cs) H)
       where (element? C [(space) (newline)])
@@ -214,10 +222,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                  (print Eval)))
 
 (define toplevel_evaluate_interactive
-  [X : A] true -> (typecheck-and-evaluate X A)
-  [X Y | Z] Boolean -> (do (toplevel_evaluate [X] Boolean)
+  [X : A] true -> (typecheck-and-evaluate-interactive X A)
+  [X Y | Z] Boolean -> (do (toplevel_evaluate_interactive [X] Boolean)
                            (nl)
-                           (toplevel_evaluate [Y | Z] Boolean))
+                           (toplevel_evaluate_interactive [Y | Z] Boolean))
   [X] true -> (typecheck-and-evaluate-interactive X (gensym (protect A)))
   [X] false -> (let Eval (eval-without-macros X)
                  Eval))
